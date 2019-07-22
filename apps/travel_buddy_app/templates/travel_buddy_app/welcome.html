@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Travel Buddy | Homepage</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/e2cd4330ca.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'travel_buddy_app/css/style.css' %}">    
+  <script src="{% static 'travel_buddy_app/js/script.js' %}"></script>
+  <script src="{% static 'travel_buddy_app/js/books.js' %}"></script>
+</head>
+<body>
+  <!--NAV BAR-->
+  <nav class="navbar navbar-expand-lg navbar-light px-5 mb-2">
+      <a class="navbar-brand" href="">Travel Buddy</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item pt-1">
+          <h3 class="font-weight-bold text-white">Welcome {{ request.session.fname }}!</h3>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fas fa-sign-out-alt fa-3x text-danger ml-3 pt-0" href="/logout/"></a>
+        </li>
+      </ul>  
+    </nav>
+    <!--END OF NAV BAR-->
+    <div class="container">
+      <div class="jumbotron bg-white">
+        <h3>Your Trip Schedules</h3>
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Destination</th>
+              <th scope="col">Travel Start Date</th>
+              <th scope="col">Travel End Date</th>
+              <th scope="col">Plan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for booking in bookings %}
+            <tr>
+              <td><a href="info_trip/{{ my_trip.id }}/">{{ booking.destination }}</a></td>
+              <td>{{ booking.start }}</td>
+              <td>{{ booking.end }}</td>
+              <td>{{ booking.desc }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="jumbotron bg-white">
+        <h3>Other User's Travel Plans</h3>
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Travel Start Date</th>
+              <th scope="col">Travel End Date</th>
+              <th scope="col">Wanna Join?</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for other_bk in other_bks %}
+            <tr>
+              <td>{{ other_bk.user.first_name }} {{ other_bk.user.last_name }}</td>
+              <td><a href="welcome/../info_trip/{{ other_bk.id }}/">{{ other_bk.destination }}</a></td>
+              <td>{{ other_bk.start }}</td>
+              <td>{{ other_bk.end }}</td>
+              <td><a class="btn btn-sm btn-outline-primary" href="welcome/../join_trip/{{ other_bk.id }}/" >Join</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    <a class="btn btn-success" href="add_trip/" >Add Travel Plan</a>
+    </div>
+</body>
+</html>

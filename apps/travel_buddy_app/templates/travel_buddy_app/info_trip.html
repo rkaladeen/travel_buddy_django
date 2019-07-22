@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Travel Buddy | Add Trip</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/e2cd4330ca.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'travel_buddy_app/css/style.css' %}">    
+  <script src="{% static 'travel_buddy_app/js/script.js' %}"></script>
+  <script src="{% static 'travel_buddy_app/js/books.js' %}"></script>
+</head>
+<body>
+  <!--NAV BAR-->
+  <nav class="navbar navbar-expand-lg navbar-light px-5 mb-2">
+    <a class="navbar-brand" href="">Travel Buddy</a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item pt-1">
+        <h3 class="font-weight-bold text-white">Welcome {{ request.session.fname }}!</h3>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fas fa-home fa-3x text-white ml-3 pt-0" href="/welcome"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fas fa-sign-out-alt fa-3x text-danger ml-3 pt-0" href="/logout/"></a>
+      </li>
+    </ul>  
+  </nav>
+  <!--END OF NAV BAR-->
+  <div class="container">
+    <div class="jumbotron bg-white">
+      <h1>{{ trip_info.destination }}</h1>
+      <p><b>Planned By:</b> {{ trip_info.user.first_name }} {{ trip_info.user.last_name }}</p>
+      <p><b>Description:</b> {{ trip_info.desc }}</p>
+      <p><b>Travel Date From:</b> {{ trip_info.start }}</p>
+      <p><b>Travel Date To:</b> {{ trip_info.end }}</p>
+    </div>
+    <div class="jumbotron bg-white">
+      <h3>Other users' joining the trip:</h3>
+      {% for user in trip_info.bookings.all %}
+      <p>{{ user.first_name }} {{ user.last_name }}</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

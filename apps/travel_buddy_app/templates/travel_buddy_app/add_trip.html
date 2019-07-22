@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Travel Buddy | Add Trip</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/e2cd4330ca.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'travel_buddy_app/css/style.css' %}">    
+  <script src="{% static 'travel_buddy_app/js/script.js' %}"></script>
+</head>
+<body>
+  <!--NAV BAR-->
+  <nav class="navbar navbar-expand-lg navbar-light px-5 mb-2">
+    <a class="navbar-brand" href="">Travel Buddy</a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item pt-1">
+        <h3 class="font-weight-bold text-white">Welcome {{ request.session.fname }}!</h3>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fas fa-home fa-3x text-white ml-3 pt-0" href="/welcome"></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fas fa-sign-out-alt fa-3x text-danger ml-3 pt-0" href="/logout/"></a>
+      </li>
+    </ul>  
+  </nav>
+  <!--END OF NAV BAR-->
+  <div class="container">
+    <div class="jumbotron bg-white w-50">
+      <h1>Add a Trip</h1>
+
+      <form action="welcome/../add_trip_process/" method="POST" id="add_trip">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="dest">Destination</label>
+          <div id="destMsg"></div> <!--AJAX Implementation-->
+          <input type="text" class="form-control" id="dest" name="dest" required>
+        </div>
+        <div class="form-group">
+          <label for="desc">Description</label>
+          <div id="descMsg"></div> <!--AJAX Implementation-->
+          <textarea class="form-control" id="desc" rows="3" name="desc" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="start">Travel Date From:</label>
+          <div id="startMsg"></div> <!--AJAX Implementation-->
+          <input type="date" class="form-control" id="start" name="start" required>
+        </div>
+        <div class="form-group">
+          <label for="end">Travel Date To:</label>
+          <div id="endMsg"></div> <!--AJAX Implementation-->
+          <input type="date" class="form-control" id="end" name="end" required>
+        </div>
+        <input type="submit" class="btn btn-success" value="Add">
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>
