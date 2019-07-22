@@ -12,7 +12,7 @@ class TripManager(models.Manager):
     elif len(postData['start']) < 1:
       is_valid = False
     else:
-      start = datetime.strptime(postData, "%Y-%m-%d")
+      start = datetime.strptime(postData['start'], "%Y-%m-%d")
       if start < datetime.now():
         is_valid = False
     if len(postData['end']) < 1:
