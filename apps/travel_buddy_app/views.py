@@ -27,13 +27,13 @@ def add_trip(request):
 
 def add_trip_process(request):
   check = Trip.objects.add(request.POST, request.session['uid'])
-  if type(check) == bool:
-    return redirect('/welcome/add_trip')
-  else:
+  if check["is_valid"]:
     user_to_add_trip = User.objects.get(id=request.session['uid'])
-    check.bookings.add(user_to_add_trip)
+    check['trip'].bookings.add(user_to_add_trip)
+    
     return redirect("/welcome")
-
+  else:
+    return redirect('/welcome/add_trip')
 def info_trip(request, t_id):
   if request.session['is_logged_in']:
     # trip_to_view = Trip.objects.get(id=t_id)

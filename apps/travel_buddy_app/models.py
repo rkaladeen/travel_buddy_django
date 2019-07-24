@@ -4,26 +4,36 @@ from ..login_reg_app.models import *
 
 class TripManager(models.Manager):
   def add(self, postData, uid):
-    is_valid = True
+    valid = {
+    "is_valid": True,
+    "errors": 0,
+    "trip": None
+    }
     if len(postData['dest']) < 5:
-      is_valid = False
-    elif len(postData['dest']) < 10:
-      is_valid = False
+      valid['errors'] += 1
+      print ("A")
+    elif len(postData['desc']) < 10:
+      valid['errors'] += 1
+      print ("B")
     elif len(postData['start']) < 1:
-      is_valid = False
+      valid['errors'] += 1
+      print ("C")
     else:
       start = datetime.strptime(postData['start'], "%Y-%m-%d")
       if start < datetime.now():
-        is_valid = False
+        valid['errors'] += 1
+        print ("D")
     if len(postData['end']) < 1:
-      is_valid = False
+      valid['errors'] += 1
+      print ("E")
     else:
       start = datetime.strptime(postData['start'], "%Y-%m-%d")
       end = datetime.strptime(postData['end'], "%Y-%m-%d")
       if end < start:
-        is_valid = False       
-    if is_valid:
-      return Trip.objects.create(
+        valid['errors'] += 1 
+    print ("F")     
+    if valid['errors'] == 0:
+      valid['trip'] = Trip.objects.create(
         user_id = uid,
         destination = postData['dest'],
         desc = postData['desc'],
@@ -31,7 +41,9 @@ class TripManager(models.Manager):
         end = postData['end']
       )
     else:
-      return is_valid
+      valid['is_valid'] = False
+    
+    return valid
   
   def dest(self, postData):
     error = ""

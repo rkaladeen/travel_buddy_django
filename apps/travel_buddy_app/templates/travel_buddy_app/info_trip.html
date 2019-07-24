@@ -41,7 +41,9 @@
     <div class="jumbotron bg-white">
       <h3>Other users' joining the trip:</h3>
       {% for user in trip_info.bookings.all %}
+      {% if not user.id == request.session.uid %}
       <p>{{ user.first_name }} {{ user.last_name }}</p>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
